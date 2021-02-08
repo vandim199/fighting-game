@@ -9,7 +9,7 @@ namespace GXPEngine
     {
         public GameLoader() : base(false)
         {
-            new Backdrop("bg1.jpg");
+            new Backdrop("Gameplay.png");
         }
     }
 }
