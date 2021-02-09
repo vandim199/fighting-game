@@ -17,13 +17,13 @@ namespace GXPEngine
 
             Canvas hitbox = new Canvas(sizeX, sizeY);
             hitbox.graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 0, 255, 0)), new Rectangle(0, 0, hitbox.width, hitbox.height));
-            hitbox.SetXY(posX, posY);
+            hitbox.SetXY(posX - GameLoader.player1.width / 2, posY - GameLoader.player1.width / 2);
             AddChild(hitbox);
         }
 
         void Update()
         {
-            if (Player1.onFrame != _frameCreated)
+            if (Player.onFrame != _frameCreated)
             {
                 this.LateDestroy();
             }

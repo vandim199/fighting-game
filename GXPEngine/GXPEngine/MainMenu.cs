@@ -35,6 +35,7 @@ namespace GXPEngine
                 if (_exitButton.HitTestPoint(Input.mouseX, Input.mouseY))
                 {
                     Console.WriteLine("Game Exit.");
+                    Environment.Exit(0);
                 }
             }
         }

@@ -82,6 +82,6 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
-    <Compile Include="Player1.cs" />
+    <Compile Include="Player.cs" />
   </ItemGroup>
 </Project>
