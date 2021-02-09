@@ -18,7 +18,7 @@ namespace GXPEngine
 
             Canvas canvas = new Canvas(1920, 200);
             canvas.SetXY(0, 830);
-            canvas.graphics.FillRectangle(new SolidBrush(Color.Red), new Rectangle(0, 0, 1920, 300));
+            canvas.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 1920, 300));
             AddChild(canvas);
         }
 

@@ -41,6 +41,8 @@
     <Compile Include="GameLoader.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\TiledLoader.cs" />
+    <Compile Include="Hitbox.cs" />
+    <Compile Include="Hurtbox.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="MyGame.cs" />
     <Compile Include="GXPEngine\Canvas.cs" />
