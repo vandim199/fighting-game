@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.IO;
 
 namespace GXPEngine
 {
@@ -13,9 +14,11 @@ namespace GXPEngine
         float _timeJumped;
         bool canJump;
         bool _playingAnimation;
-        public static int onFrame;
+        public int onFrame;
         GameObject enemy;
         int posX;
+        int playerID;
+        public int numberOfHurtboxes;
 
         int[] controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E};
         int[] controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT};
@@ -39,6 +42,8 @@ namespace GXPEngine
             SetXY(posX, 0);
 
             enemy = newEnemy;
+
+            playerID = playerNumber;
         }
 
         void Update()
@@ -49,7 +54,7 @@ namespace GXPEngine
 
             if (enemy == null)
             {
-                //enemy = ;
+                enemy = GameLoader.player2;
             }
 
             if (enemy != null)
@@ -57,22 +62,30 @@ namespace GXPEngine
                 if (x > enemy.x) scaleX = -0.7f;
                 if (x < enemy.x) scaleX = 0.7f;
             }
-
-            if (currentFrame == 14)
+            if (numberOfHurtboxes == 0)
             {
-                Hurtbox hurtbox = new Hurtbox(100, 100, 500, 700, currentFrame);
-                AddChild(hurtbox);
+                if (currentFrame >= 0 && currentFrame <= 12)
+                {
+                    Hurtbox hurtbox = new Hurtbox(120, 150, 500, 700, currentFrame, playerID, this);
+                }
+                else if (currentFrame == 14)
+                {
+                    Hurtbox hurtbox = new Hurtbox(100, 100, 500, 700, currentFrame, playerID, this);
 
-                Hitbox hitbox = new Hitbox(600, 10, 400, 300, currentFrame);
-                AddChild(hitbox);
-            }
-            else if (currentFrame == 15)
-            {
-                Hurtbox hurtbox = new Hurtbox(100, 100, 500, 700, currentFrame);
-                AddChild(hurtbox);
+                    Hitbox hitbox = new Hitbox(600, 10, 400, 300, currentFrame, playerID, this);
+                    AddChild(hitbox);
+                }
+                else if (currentFrame == 15)
+                {
+                    Hurtbox hurtbox = new Hurtbox(100, 100, 500, 700, currentFrame, playerID, this);
 
-                Hitbox hitbox = new Hitbox(550, 80, 350, 250, currentFrame);
-                AddChild(hitbox);
+                    Hitbox hitbox = new Hitbox(550, 80, 350, 250, currentFrame, playerID, this);
+                    AddChild(hitbox);
+                }
+                else if (currentFrame >= 24 && currentFrame <= 28)
+                {
+                    Hurtbox hurtbox = new Hurtbox(100, 280, 500, 450, currentFrame, playerID, this);
+                }
             }
         }
 

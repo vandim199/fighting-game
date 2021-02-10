@@ -6,25 +6,34 @@ using System.Drawing;
 
 namespace GXPEngine
 {
-    class Hurtbox : GameObject
+    class Hurtbox : Canvas
     {
         int _frameCreated;
         int _transparency = 50;
+        public int playerID;
+        Player player;
 
-        public Hurtbox(int posX, int posY, int sizeX, int sizeY, int playerFrame) : base()
+        public Hurtbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer) : base(sizeX, sizeY)
         {
             _frameCreated = playerFrame;
+            SetOrigin(width / 2, height / 2);
+            graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 0, 255, 0)), new Rectangle(0, 0, width, height));
+            SetXY(posX, posY);
+            //SetXY(posX - GameLoader.player1.width / 2, posY - GameLoader.player1.width / 2);
+            //owner = ownerID;
 
-            Canvas hitbox = new Canvas(sizeX, sizeY);
-            hitbox.graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 0, 255, 0)), new Rectangle(0, 0, hitbox.width, hitbox.height));
-            hitbox.SetXY(posX - GameLoader.player1.width / 2, posY - GameLoader.player1.width / 2);
-            AddChild(hitbox);
+            player = newPlayer as Player;
+            playerID = newPlayerID;
+            player.numberOfHurtboxes++;
+
+            player.AddChild(this);
         }
 
         void Update()
         {
-            if (Player.onFrame != _frameCreated)
+            if (player.onFrame != _frameCreated)
             {
+                player.numberOfHurtboxes--;
                 this.LateDestroy();
             }
         }

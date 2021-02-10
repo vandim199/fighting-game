@@ -14,10 +14,12 @@ namespace GXPEngine
         {
             _playButton = new Sprite("PlayButton.png");
             _playButton.SetXY(1100, 500);
+            _playButton.scale = 0.6f;
             AddChild(_playButton);
 
             _exitButton = new Sprite("ExitButton.png");
             _exitButton.SetXY(1100, 600);
+            _exitButton.scale = 0.6f;
             AddChild(_exitButton);
         }
 
