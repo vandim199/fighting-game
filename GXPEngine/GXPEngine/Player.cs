@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.IO;
+using ExtensionMethods;
 
 namespace GXPEngine
 {
@@ -19,10 +20,16 @@ namespace GXPEngine
         int posX;
         int playerID;
         public int numberOfHurtboxes;
+        String moveset;
 
         int[] controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E};
         int[] controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT};
         int[] controller;
+
+        string BoobBitchX;
+        string BoobBitchY;
+        string BoobBitchW;
+        string BoobBitchH;
 
         public Player(int playerNumber, Player newEnemy) : base("FilliaTest.png", 12, 3, -1, false, true)
         {
@@ -44,6 +51,31 @@ namespace GXPEngine
             enemy = newEnemy;
 
             playerID = playerNumber;
+
+            //moveset = File.ReadAllText("Test Box.svg");
+            //Console.WriteLine(moveset);
+            //String[] moves = moveset.Split(new[] { "<rect " }, StringSplitOptions.RemoveEmptyEntries);
+            //Console.WriteLine(moves[1]);
+
+            string line;
+            int counter = 0;
+
+            System.IO.StreamReader file = new System.IO.StreamReader("Test Box.svg");
+            while ((line = file.ReadLine()) != null)
+            {
+                if(line.StartsWith("<rect"))
+                {
+                    BoobBitchX = line.Between("x=\"", "\"");
+                    BoobBitchY = line.Between("y=\"", "\"");
+                    BoobBitchW = line.Between("width=\"", "\"");
+                    BoobBitchH = line.Between("height=\"", "\"");
+                }
+                counter++;
+            }
+            Console.WriteLine(BoobBitchX);
+            Console.WriteLine(BoobBitchY);
+            Console.WriteLine(BoobBitchW);
+            Console.WriteLine(BoobBitchH);
         }
 
         void Update()
