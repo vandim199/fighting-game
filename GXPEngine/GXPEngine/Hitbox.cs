@@ -13,17 +13,23 @@ namespace GXPEngine
         public int playerID;
         Player player;
 
-        public Hitbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer) : base(sizeX, sizeY)
+        public Hitbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer, bool mirrored = false) : base(sizeX, sizeY)
         {
             player = newPlayer as Player;
             playerID = newPlayerID;
 
             _frameCreated = playerFrame;
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 255, 0, 0)), new Rectangle(0, 0, width, height));
-            SetXY(posX, posY);
+            SetXY(posX - player.width / 2, posY - player.height / 2);
 
             player.numberOfHitboxes++;
             player.AddChild(this);
+
+            if (mirrored)
+            {
+                SetScaleXY(-scaleX, scaleY);
+                x -= width;
+            }
         }
 
         void Update()
@@ -44,6 +50,7 @@ namespace GXPEngine
                 if (otherHurtbox.playerID != this.playerID)
                 {
                     Console.WriteLine("HIT");
+                    otherHurtbox.isHit = true;
                 }
                 //LateDestroy();
             }

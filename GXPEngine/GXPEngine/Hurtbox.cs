@@ -12,18 +12,27 @@ namespace GXPEngine
         int _transparency = 50;
         public int playerID;
         Player player;
+        public bool isHit = false;
 
-        public Hurtbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer) : base(sizeX, sizeY)
+        public Hurtbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer, bool mirrored = false) : base(sizeX, sizeY)
         {
             _frameCreated = playerFrame;
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 0, 255, 0)), new Rectangle(0, 0, width, height));
-            SetXY(posX, posY + 80);
-
+            
             player = newPlayer as Player;
             playerID = newPlayerID;
             player.numberOfHurtboxes++;
 
             player.AddChild(this);
+
+            //SetOrigin(width / 2, height / 2);
+
+            SetXY(posX - player.width / 2, posY - player.height / 2);
+            if (mirrored)
+            {
+                SetScaleXY(-scaleX, scaleY);
+                x += width;
+            }
         }
 
         void Update()
@@ -32,6 +41,11 @@ namespace GXPEngine
             {
                 player.numberOfHurtboxes--;
                 this.LateDestroy();
+            }
+
+            if (isHit)
+            {
+                player.hp--;
             }
         }
     }

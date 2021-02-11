@@ -7,37 +7,40 @@ namespace GXPEngine
 {
     class CharacterSelect : Sprite
     {
-        Sprite _backButton;
-        Sprite _nextButton;
+        Button _backButton;
+        Button _nextButton;
+        Button _boobBitchButton;
+        int player1Selection = 1;
+        int player2Selection = 1;
 
         public CharacterSelect() : base("CharacterSelect.png")
         {
-            _backButton = new Sprite("BackButton.png");
-            _backButton.SetXY(100, 700);
-            AddChild(_backButton);
+            _backButton = new Button(this, 100, 700, "BackButton.png");
 
-            _nextButton = new Sprite("NextButton.png");
-            _nextButton.SetXY(1200, 700);
-            AddChild(_nextButton);
+            _nextButton = new Button(this, 1200, 700, "NextButton.png");
+
+            _boobBitchButton = new Button(this, 300, 300, "BoobBitchPortrait.png", 0.7f);
         }
 
         void Update()
         {
-            if (Input.GetMouseButtonUp(0))
+            if (_backButton.clicked)
             {
-                if (_nextButton.HitTestPoint(Input.mouseX, Input.mouseY))
-                {
-                    Console.WriteLine("Characters Selected.");
-                    game.AddChild(new GameLoader());
-                    this.LateDestroy();
-                }
+                Console.WriteLine("Back.");
+                game.AddChild(new MainMenu());
+                this.LateDestroy();
+            }
 
-                if (_backButton.HitTestPoint(Input.mouseX, Input.mouseY))
-                {
-                    Console.WriteLine("Back.");
-                    game.AddChild(new MainMenu());
-                    this.LateDestroy();
-                }
+            if (_nextButton.clicked)
+            {
+                Console.WriteLine("Characters Selected.");
+                game.AddChild(new GameLoader(player1Selection, player2Selection));
+                this.LateDestroy();
+            }
+
+            if (_boobBitchButton.clicked)
+            {
+                player1Selection = 2;
             }
         }
     }

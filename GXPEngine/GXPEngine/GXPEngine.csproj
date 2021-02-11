@@ -37,7 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backdrop.cs" />
-    <Compile Include="BoobBitch.cs" />
+    <Compile Include="CharacterMoveset.cs" />
+    <Compile Include="Button.cs" />
     <Compile Include="HurtboxCreator.cs" />
     <Compile Include="MyExtensions.cs" />
     <Compile Include="CharacterSelect.cs" />
@@ -86,5 +87,6 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="UI.cs" />
   </ItemGroup>
 </Project>

@@ -9,8 +9,8 @@ namespace GXPEngine
     {
         Player player;
         int X, Y, W, H, Frame, Duration;
-        bool isHurtbox;
-        bool isHitbox;
+        bool isHurtbox = false;
+        bool isHitbox = false;
 
         public HurtboxCreator(int newX, int newY, int newW, int newH, string newColor, int newFrame, int newDuration, Player newPlayer) : base()
         {
@@ -21,6 +21,7 @@ namespace GXPEngine
             Frame = newFrame;
             Duration = newDuration;
             player = newPlayer;
+
             player.AddChild(this);
 
             if(newColor == "00ff00")
@@ -39,22 +40,22 @@ namespace GXPEngine
         {
             if (player.numberOfHurtboxes == 0)
             {
-                if (player.currentFrame >= Frame && player.currentFrame < Duration)
+                if (player.currentFrame >= Frame && player.currentFrame < Frame + Duration)
                 {
                     if (isHurtbox)
                     {
-                        new Hurtbox(X, Y, W, H, player.currentFrame, player.playerID, player);
+                        new Hurtbox(X, Y, W, H, player.currentFrame, player.playerID, player, player.flip);
                     }
                 }
             }
 
             if (player.numberOfHitboxes == 0)
             {
-                if (player.currentFrame >= Frame && player.currentFrame < Duration)
+                if (player.currentFrame >= Frame && player.currentFrame < Frame + Duration)
                 {
                     if (isHitbox)
                     {
-                        new Hitbox(X, Y, W, H, player.currentFrame, player.playerID, player);
+                        new Hitbox(X, Y, W, H, player.currentFrame, player.playerID, player, player.flip);
                     }
                 }
             }

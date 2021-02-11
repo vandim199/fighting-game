@@ -9,6 +9,7 @@ namespace GXPEngine
     {
         public Backdrop(string backgroundImage) : base(backgroundImage, false, false)
         {
+            scale = 0.9f;
             game.AddChild(this);
         }
     }

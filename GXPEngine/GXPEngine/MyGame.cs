@@ -7,6 +7,7 @@ public class MyGame : Game
 	public MyGame() : base(1920, 1080, false, false)
 	{
         AddChild(new MainMenu());
+        targetFps = 60;
     }
 
     void Update()
