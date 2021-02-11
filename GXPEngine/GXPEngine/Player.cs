@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
-using System.IO;
-using ExtensionMethods;
 
 namespace GXPEngine
 {
@@ -15,26 +12,22 @@ namespace GXPEngine
         float _timeJumped;
         bool canJump;
         bool _playingAnimation;
-        public int onFrame;
-        GameObject enemy;
+        Player enemy;
         int posX;
-        int playerID;
-        public int numberOfHurtboxes;
-        String moveset;
+        public int playerID;
+        public int numberOfHurtboxes = 0;
+        public int numberOfHitboxes = 0;
 
         int[] controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E};
         int[] controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT};
         int[] controller;
 
-        string BoobBitchX;
-        string BoobBitchY;
-        string BoobBitchW;
-        string BoobBitchH;
+        GameObject character;
 
         public Player(int playerNumber, Player newEnemy) : base("FilliaTest.png", 12, 3, -1, false, true)
         {
             scale = 0.7f;
-            SetOrigin(width / 2, height / 2);
+            //SetOrigin(width / 2, height / 2);
 
             if(playerNumber == 1)
             {
@@ -45,6 +38,7 @@ namespace GXPEngine
             {
                 posX = 1200;
                 controller = controller2;
+                alpha = 0.5f;
             }
             SetXY(posX, 0);
 
@@ -52,30 +46,8 @@ namespace GXPEngine
 
             playerID = playerNumber;
 
-            //moveset = File.ReadAllText("Test Box.svg");
-            //Console.WriteLine(moveset);
-            //String[] moves = moveset.Split(new[] { "<rect " }, StringSplitOptions.RemoveEmptyEntries);
-            //Console.WriteLine(moves[1]);
-
-            string line;
-            int counter = 0;
-
-            System.IO.StreamReader file = new System.IO.StreamReader("Test Box.svg");
-            while ((line = file.ReadLine()) != null)
-            {
-                if(line.StartsWith("<rect"))
-                {
-                    BoobBitchX = line.Between("x=\"", "\"");
-                    BoobBitchY = line.Between("y=\"", "\"");
-                    BoobBitchW = line.Between("width=\"", "\"");
-                    BoobBitchH = line.Between("height=\"", "\"");
-                }
-                counter++;
-            }
-            Console.WriteLine(BoobBitchX);
-            Console.WriteLine(BoobBitchY);
-            Console.WriteLine(BoobBitchW);
-            Console.WriteLine(BoobBitchH);
+            //change based on which character is picked
+            character = new BoobBitch(this);
         }
 
         void Update()
@@ -93,31 +65,6 @@ namespace GXPEngine
             {
                 if (x > enemy.x) scaleX = -0.7f;
                 if (x < enemy.x) scaleX = 0.7f;
-            }
-            if (numberOfHurtboxes == 0)
-            {
-                if (currentFrame >= 0 && currentFrame <= 12)
-                {
-                    Hurtbox hurtbox = new Hurtbox(120, 150, 500, 700, currentFrame, playerID, this);
-                }
-                else if (currentFrame == 14)
-                {
-                    Hurtbox hurtbox = new Hurtbox(100, 100, 500, 700, currentFrame, playerID, this);
-
-                    Hitbox hitbox = new Hitbox(600, 10, 400, 300, currentFrame, playerID, this);
-                    AddChild(hitbox);
-                }
-                else if (currentFrame == 15)
-                {
-                    Hurtbox hurtbox = new Hurtbox(100, 100, 500, 700, currentFrame, playerID, this);
-
-                    Hitbox hitbox = new Hitbox(550, 80, 350, 250, currentFrame, playerID, this);
-                    AddChild(hitbox);
-                }
-                else if (currentFrame >= 24 && currentFrame <= 28)
-                {
-                    Hurtbox hurtbox = new Hurtbox(100, 280, 500, 450, currentFrame, playerID, this);
-                }
             }
         }
 
@@ -170,7 +117,6 @@ namespace GXPEngine
         private void animation()
         {
             Animate();
-            onFrame = currentFrame;
 
             if (!_playingAnimation)
             {
@@ -192,5 +138,7 @@ namespace GXPEngine
                 _playingAnimation = false;
             }
         }
+
+        
     }
 }

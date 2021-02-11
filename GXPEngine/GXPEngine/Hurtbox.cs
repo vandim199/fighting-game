@@ -16,11 +16,8 @@ namespace GXPEngine
         public Hurtbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer) : base(sizeX, sizeY)
         {
             _frameCreated = playerFrame;
-            SetOrigin(width / 2, height / 2);
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 0, 255, 0)), new Rectangle(0, 0, width, height));
-            SetXY(posX, posY);
-            //SetXY(posX - GameLoader.player1.width / 2, posY - GameLoader.player1.width / 2);
-            //owner = ownerID;
+            SetXY(posX, posY + 80);
 
             player = newPlayer as Player;
             playerID = newPlayerID;
@@ -31,7 +28,7 @@ namespace GXPEngine
 
         void Update()
         {
-            if (player.onFrame != _frameCreated)
+            if (player.currentFrame != _frameCreated)
             {
                 player.numberOfHurtboxes--;
                 this.LateDestroy();

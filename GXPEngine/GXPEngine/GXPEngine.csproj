@@ -37,6 +37,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backdrop.cs" />
+    <Compile Include="BoobBitch.cs" />
+    <Compile Include="HurtboxCreator.cs" />
     <Compile Include="MyExtensions.cs" />
     <Compile Include="CharacterSelect.cs" />
     <Compile Include="GameLoader.cs" />
