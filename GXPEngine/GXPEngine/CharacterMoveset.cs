@@ -21,19 +21,6 @@ namespace GXPEngine
             readSVG("Test Box 4.svg");
         }
 
-        void Update()
-        {
-            if (player.numberOfHurtboxes == 0)
-            {
-                if (player.currentFrame == 14)
-                {
-                    //Hurtbox hurtbox = new Hurtbox(100, 100, 500, 700, player.currentFrame, player.playerID, player);
-
-                    //Hitbox hitbox = new Hitbox(600, 10, 400, 300, player.currentFrame, player.playerID, player, player.flip);
-                }
-            }
-        }
-
         private void collisionMaker(string collisionX, string collisionY, string collisionW, string collisionH, string color, string collisionFrame, string collisionDuration = "1")
         {
             Console.WriteLine("X: " + collisionX);

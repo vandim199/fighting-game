@@ -13,7 +13,7 @@ namespace GXPEngine
         bool canJump;
         bool _playingAnimation;
         bool crouching = false;
-        public bool isLeft, isRight, flip = false;
+        public bool isLeft, flip = false;
         Player enemy;
         int posX;
         public int playerID;
@@ -21,15 +21,23 @@ namespace GXPEngine
         public int numberOfHitboxes = 0;
         public int hp = 100;
         float _scale;
+        public bool startInvulnerable = false;
+        public bool invulnerable = false;
+        float timeInvulnerable = 100000000;
+        public bool isHit = false;
+        bool isBlocking = false;
+        public int damageTaken = 0;
+        float blockingStun = 10000000;
+        bool holdFlip;
 
         int[] controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E};
         int[] controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT};
         int[] controller;
 
-        //   _ = start   ^ = end      idle  walk   attack
-        //                            i_ i^ w_ w^  a_ a^
-        int[] animationsFillia =    { 0, 1, 0, 12, 12, 8 };
-        int[] animationsBoobBitch = { 0, 9, 0, 1, 9, 5};
+        //   _ = start   ^ = end      idle  walk   attack crouch hit block
+        //                            i_ i^ w_ w^  a_ a^  c_ c^ h_ h^b_ b^
+        int[] animationsFillia =    { 0, 2, 0, 12, 12, 8, 24, 5};
+        int[] animationsBoobBitch = { 0, 7, 13, 5, 7, 5, 12, 1, 11, 1, 18, 1};
         int[] animations;
 
         GameObject character;
@@ -42,7 +50,7 @@ namespace GXPEngine
 
             if(playerNumber == 1)
             {
-                posX = 0;
+                posX = 100;
                 controller = controller1;
             }
             if(playerNumber == 2)
@@ -98,6 +106,35 @@ namespace GXPEngine
                     flip = false;
                 }
             }
+
+            if (damageTaken != 0)
+            {
+                holdFlip = flip;
+                if (isBlocking && !invulnerable) 
+                {
+                    blockingStun = Time.time;
+                    isHit = true;
+                }
+                else
+                {
+                    hp -= damageTaken;
+                    startInvulnerable = true;
+                }
+                damageTaken = 0;
+            }
+
+            if (Time.time > blockingStun + 300)
+            {
+                isHit = false;
+                blockingStun = 100000000;
+            }
+
+            if (isBlocking && isHit && !invulnerable)
+            {
+                SetCycle(animations[10], animations[11], 5);
+                flip = holdFlip;
+                isBlocking = true;
+            }
         }
 
         private void movement()
@@ -130,6 +167,11 @@ namespace GXPEngine
             }
             else canJump = false;
 
+            if (isHit)
+            {
+                _speedX = 0;
+            }
+
             if (!_playingAnimation)
             {
                 MoveUntilCollision(_speedX, _speedY, GameLoader.enviroment);
@@ -138,12 +180,47 @@ namespace GXPEngine
 
         private void combat()
         {
-            if (Input.GetKeyDown(controller[4]))
+            if (Input.GetKeyDown(controller[4]) && !crouching)
             {
                 SetCycle(animations[4], animations[5], 5);
                 _playingAnimation = true;
             }
             if (currentFrame == animations[4] + animations[5] - 1) _playingAnimation = false;
+
+            if (startInvulnerable)
+            {
+                timeInvulnerable = Time.time;
+                invulnerable = true;
+                isHit = true;
+                startInvulnerable = false;
+            }
+
+            if (Time.time > timeInvulnerable + 600)
+            {
+                isHit = false;
+                invulnerable = false;
+                timeInvulnerable = 1000000000;
+            }
+
+            if (invulnerable)
+            {
+                SetCycle(animations[8], animations[9], 5);
+            }
+
+            if (Input.GetKey(controller[1]) && !flip && canJump)
+            {
+                isBlocking = true;
+            }
+            else if (Input.GetKey(controller[3]) && flip && canJump)
+            {
+                isBlocking = true;
+            }
+            else isBlocking = false;
+
+            if (isBlocking)
+            {
+                Console.WriteLine("blocking");
+            }
         }
 
         private void animation()
@@ -153,19 +230,19 @@ namespace GXPEngine
             if (!_playingAnimation)
             {
                 if (_speedX != 0) SetCycle(animations[2], animations[3], 5);
-                else SetCycle(animations[0], animations[1], 5);
+                else if (!invulnerable) SetCycle(animations[0], animations[1], 5);
             }
 
             if (canJump != false)
             {
-                if (Input.GetKey(controller[2]) && currentFrame != 28)
+                if (Input.GetKey(controller[2]) && currentFrame != 28 && !isHit)
                 {
                     _playingAnimation = true;
                     crouching = true;
-                    SetCycle(24, 5, 5);
+                    SetCycle(animations[6], animations[7], 5);
                 }
             }
-            if (currentFrame == 28) SetCycle(28, 1, 5);
+            if (currentFrame == animations[6] + animations[7] - 1) SetCycle(animations[6] + animations[7] - 1, 1, 5);
             if (Input.GetKeyUp(controller[2]) && crouching)
             {
                 SetCycle(0, 1, 5);

@@ -13,6 +13,7 @@ namespace GXPEngine
         public int playerID;
         Player player;
         public bool isHit = false;
+        public int damageTaken = 0;
 
         public Hurtbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer, bool mirrored = false) : base(sizeX, sizeY)
         {
@@ -45,7 +46,8 @@ namespace GXPEngine
 
             if (isHit)
             {
-                player.hp--;
+                player.damageTaken = damageTaken;
+                isHit = false;
             }
         }
     }

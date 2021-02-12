@@ -28,7 +28,6 @@ namespace GXPEngine
             floor.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 1920, 300));
             AddChild(floor);
 
-
             assignCharacters(character1);
             player1 = new Player(character1, 1, player2, characterFile, characterColumns, characterRows, characterScale);
             AddChild(player1);
@@ -39,12 +38,17 @@ namespace GXPEngine
 
             enviroment[0] = floor;
 
-            UI = new UI();
+            UI = new UI(player1, player2);
+            AddChild(UI);
         }
 
         void Update()
         {
-
+            if (Input.GetKeyDown(Key.P))
+            {
+                game.AddChild(new CharacterSelect());
+                LateDestroy();
+            }
         }
 
         void assignCharacters(int chosenCharacter)
@@ -61,8 +65,8 @@ namespace GXPEngine
                     break;
                 case 2:
                     characterFile = "BoobBitch.png";
-                    characterColumns = 9;
-                    characterRows = 2;
+                    characterColumns = 7;
+                    characterRows = 3;
                     characterScale = 0.55;
                     break;
             }

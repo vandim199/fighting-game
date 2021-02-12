@@ -50,9 +50,9 @@ namespace GXPEngine
                 if (otherHurtbox.playerID != this.playerID)
                 {
                     Console.WriteLine("HIT");
+                    otherHurtbox.damageTaken = 2;
                     otherHurtbox.isHit = true;
                 }
-                //LateDestroy();
             }
         }
     }

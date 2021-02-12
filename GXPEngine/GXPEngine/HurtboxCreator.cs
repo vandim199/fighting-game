@@ -42,7 +42,7 @@ namespace GXPEngine
             {
                 if (player.currentFrame >= Frame && player.currentFrame < Frame + Duration)
                 {
-                    if (isHurtbox)
+                    if (isHurtbox && !player.isHit)
                     {
                         new Hurtbox(X, Y, W, H, player.currentFrame, player.playerID, player, player.flip);
                     }

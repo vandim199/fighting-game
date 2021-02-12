@@ -10,8 +10,8 @@ namespace GXPEngine
         Button _backButton;
         Button _nextButton;
         Button _boobBitchButton;
-        int player1Selection = 1;
-        int player2Selection = 1;
+        int player1Selection = 2;
+        int player2Selection = 2;
 
         public CharacterSelect() : base("CharacterSelect.png")
         {
@@ -41,6 +41,7 @@ namespace GXPEngine
             if (_boobBitchButton.clicked)
             {
                 player1Selection = 2;
+                player2Selection = 2;
             }
         }
     }
