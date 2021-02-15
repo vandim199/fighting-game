@@ -9,24 +9,35 @@ namespace GXPEngine
     class Hitbox : Canvas
     {
         int _frameCreated;
-        int _transparency = 50;
+        int _transparency = 0;
         public int playerID;
         Player player;
 
-        public Hitbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer) : base(sizeX, sizeY)
+        public Hitbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer, bool mirrored = false) : base(sizeX, sizeY)
         {
-            _frameCreated = playerFrame;
-            graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 255, 0, 0)), new Rectangle(0, 0, width, height));
-            SetXY(posX - GameLoader.player1.width / 2, posY - GameLoader.player1.height / 2);
-
             player = newPlayer as Player;
             playerID = newPlayerID;
+
+            _frameCreated = playerFrame;
+            graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 255, 0, 0)), new Rectangle(0, 0, width, height));
+
+            player.numberOfHitboxes++;
+            player.AddChild(this);
+
+            SetOrigin(player.width / 2, player.height / 2);
+            SetXY(posX, posY);
+
+            if (mirrored)
+            {
+                x = -x - width + 1000;
+            }
         }
 
         void Update()
         {
-            if (player.onFrame != _frameCreated)
+            if (player.currentFrame != _frameCreated)
             {
+                player.numberOfHitboxes--;
                 this.LateDestroy();
             }
         }
@@ -40,6 +51,8 @@ namespace GXPEngine
                 if (otherHurtbox.playerID != this.playerID)
                 {
                     Console.WriteLine("HIT");
+                    otherHurtbox.damageTaken = 1;
+                    otherHurtbox.isHit = true;
                 }
             }
         }

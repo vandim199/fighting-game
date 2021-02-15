@@ -7,11 +7,11 @@ public class MyGame : Game
 	public MyGame() : base(1920, 1080, false, false)
 	{
         AddChild(new MainMenu());
+        targetFps = 60;
     }
 
     void Update()
 	{
-        Console.WriteLine(currentFps);
 	}
 
 	static void Main()							// Main() is the first method that's called when the program is run

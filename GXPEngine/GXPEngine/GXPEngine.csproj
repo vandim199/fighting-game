@@ -8,7 +8,7 @@
     <ProjectGuid>{B5126D4C-7FE0-4552-BC8C-E68D529C22B2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>GXPEngine</RootNamespace>
-    <AssemblyName>GXPEngine</AssemblyName>
+    <AssemblyName>Bare Brawlers</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>
@@ -30,6 +30,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <ConsolePause>False</ConsolePause>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Oppai Studios.ico</ApplicationIcon>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Reference Include="System.Drawing" />
@@ -37,6 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backdrop.cs" />
+    <Compile Include="CharacterMoveset.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="HurtboxCreator.cs" />
+    <Compile Include="MyExtensions.cs" />
     <Compile Include="CharacterSelect.cs" />
     <Compile Include="GameLoader.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
@@ -83,5 +90,9 @@
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="UI.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Oppai Studios.ico" />
   </ItemGroup>
 </Project>

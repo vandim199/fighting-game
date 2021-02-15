@@ -7,38 +7,29 @@ namespace GXPEngine
 {
     class MainMenu : Sprite
     {
-        Sprite _playButton;
-        Sprite _exitButton;
+        Button _playButton;
+        Button _exitButton;
 
         public MainMenu() : base("MainMenuBG.png")
         {
-            _playButton = new Sprite("PlayButton.png");
-            _playButton.SetXY(1100, 500);
-            _playButton.scale = 0.6f;
-            AddChild(_playButton);
+            _playButton = new Button(this, 1100, 500, "PlayButton.png", 0.6);
 
-            _exitButton = new Sprite("ExitButton.png");
-            _exitButton.SetXY(1100, 600);
-            _exitButton.scale = 0.6f;
-            AddChild(_exitButton);
+            _exitButton = new Button(this, 1100, 600, "ExitButton.png", 0.6);
         }
 
         void Update()
         {
-            if (Input.GetMouseButtonUp(0))
+            if (_playButton.clicked)
             {
-                if (_playButton.HitTestPoint(Input.mouseX, Input.mouseY))
-                {
-                    Console.WriteLine("Game Start.");
-                    game.AddChild(new CharacterSelect());
-                    this.LateDestroy();
-                }
+                Console.WriteLine("Game Start.");
+                game.AddChild(new CharacterSelect());
+                this.LateDestroy();
+            }
 
-                if (_exitButton.HitTestPoint(Input.mouseX, Input.mouseY))
-                {
-                    Console.WriteLine("Game Exit.");
-                    Environment.Exit(0);
-                }
+            if (_exitButton.clicked)
+            {
+                Console.WriteLine("Game Exit.");
+                Environment.Exit(0);
             }
         }
     }
