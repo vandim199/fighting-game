@@ -18,29 +18,30 @@ namespace GXPEngine
             player.AddChild(this);
 
             readSVG(svgFile);
-            readSVG("Test Box 4.svg");
+            //readSVG("Test Box 4.svg");
         }
 
         private void collisionMaker(string collisionX, string collisionY, string collisionW, string collisionH, string color, string collisionFrame, string collisionDuration = "1")
         {
-            Console.WriteLine("X: " + collisionX);
             //hurtboxes =
             new HurtboxCreator(IntConverter(collisionX), IntConverter(collisionY), IntConverter(collisionW), IntConverter(collisionH), color, IntConverter(collisionFrame), IntConverter(collisionDuration), player);
         }
 
         public static int IntConverter(string value)
         {
-            int roundedInt;
-
-            if (value.Contains("."))
+            int roundedInt = 1;
+            if (value.Length > 0)
             {
-                double newValue = double.Parse(value, CultureInfo.InvariantCulture.NumberFormat);
-                roundedInt = (int)Math.Ceiling(newValue);
-            }
-            else
-            {
-                Console.WriteLine("value is " + value);
-                roundedInt = int.Parse(value);
+                if (value.Contains("."))
+                {
+                    double newValue = double.Parse(value, CultureInfo.InvariantCulture.NumberFormat);
+                    roundedInt = (int)Math.Ceiling(newValue);
+                }
+                else
+                {
+                    Console.WriteLine("value is " + value);
+                    roundedInt = int.Parse(value);
+                }
             }
             return roundedInt;
         }

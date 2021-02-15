@@ -20,15 +20,16 @@ namespace GXPEngine
 
             _frameCreated = playerFrame;
             graphics.FillRectangle(new SolidBrush(Color.FromArgb(_transparency, 255, 0, 0)), new Rectangle(0, 0, width, height));
-            SetXY(posX - player.width / 2, posY - player.height / 2);
 
             player.numberOfHitboxes++;
             player.AddChild(this);
 
+            SetOrigin(player.width / 2, player.height / 2);
+            SetXY(posX, posY);
+
             if (mirrored)
             {
-                SetScaleXY(-scaleX, scaleY);
-                x -= width;
+                x = -x - width + 1000;
             }
         }
 

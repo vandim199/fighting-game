@@ -11,8 +11,11 @@ namespace GXPEngine
         public static Player player1;
         public static Player player2;
         public static Canvas floor;
+        public static Canvas wallLeft;
+        public static Canvas wallRight;
         public static Canvas UI;
-        public static GameObject[] enviroment = new GameObject[1];
+        public static GameObject[] enviroment;
+        // = new GameObject[3]
         string characterFile;
         int characterColumns;
         int characterRows;
@@ -24,9 +27,19 @@ namespace GXPEngine
             new Backdrop("Gameplay.png");
 
             floor = new Canvas(1920, 200);
-            floor.SetXY(0, 830);
-            floor.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 1920, 300));
+            floor.SetXY(0, 880);
+            //floor.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 1920, 300));
             AddChild(floor);
+
+            wallLeft = new Canvas(100, 1080);
+            wallLeft.SetXY(-200, 0);
+            wallLeft.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, wallLeft.width, wallLeft.height));
+            AddChild(wallLeft);
+
+            wallRight = new Canvas(100, 1080);
+            wallRight.SetXY(2050, 0);
+            wallRight.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, wallRight.width, wallRight.height));
+            AddChild(wallRight);
 
             assignCharacters(character1);
             player1 = new Player(character1, 1, player2, characterFile, characterColumns, characterRows, characterScale);
@@ -36,7 +49,7 @@ namespace GXPEngine
             player2 = new Player(character2, 2, player1, characterFile, characterColumns, characterRows, characterScale);
             AddChild(player2);
 
-            enviroment[0] = floor;
+            enviroment = new GameObject[] { floor, wallLeft, wallRight };
 
             UI = new UI(player1, player2);
             AddChild(UI);
@@ -66,7 +79,7 @@ namespace GXPEngine
                 case 2:
                     characterFile = "BoobBitch.png";
                     characterColumns = 7;
-                    characterRows = 3;
+                    characterRows = 4;
                     characterScale = 0.55;
                     break;
             }

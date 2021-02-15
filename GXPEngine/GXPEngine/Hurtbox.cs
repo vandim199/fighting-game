@@ -26,13 +26,14 @@ namespace GXPEngine
 
             player.AddChild(this);
 
-            //SetOrigin(width / 2, height / 2);
+            //DO NOT TOUCH:
+            SetOrigin(player.width/2, player.height / 2);
+            SetXY(posX, posY);
 
-            SetXY(posX - player.width / 2, posY - player.height / 2);
             if (mirrored)
             {
-                SetScaleXY(-scaleX, scaleY);
-                x += width;
+                //x = (player.width - (x + width)) + (1000 - player.width);
+                x = -x -width + 1000;
             }
         }
 

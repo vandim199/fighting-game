@@ -12,5 +12,7 @@
   <rect stroke="#000007" opacity="0.31" id="svg_6" height="946.66748" width="454.66705" y="50.66625" x="269.99976" stroke-width="5" fill="#00ff00"/>
   <rect stroke="#000012" id="svg_6" height="646.66748" width="384.00032" y="370.66625" x="269.99976" stroke-opacity="null" stroke-width="1" fill="#00ff00"/>
   <rect stroke="#000013" id="svg_6" height="946.66748" width="384.00032" y="50.66625" x="269.99976" stroke-opacity="null" stroke-width="5" fill="#00ff00"/>
+  <rect id="svg_2" height="216.41791" width="495.52239" y="604.47761" x="505.22388" stroke="#000020" fill="#ff0000"/>
+  <rect id="svg_3" height="534.32836" width="388.0597" y="450.74627" x="118.65672" stroke="#000019" fill="#00ff00" stroke-width="3" />
  </g>
 </svg>
