@@ -71,16 +71,22 @@ namespace GXPEngine
             switch (chosenCharacter)
             {
                 case 1:
-                    characterFile = "FilliaTest.png";
-                    characterColumns = 12;
-                    characterRows = 3;
-                    characterScale = 0.7;
-                    break;
-                case 2:
                     characterFile = "BoobBitch.png";
                     characterColumns = 7;
                     characterRows = 4;
                     characterScale = 0.55;
+                    break;
+                case 2:
+                    characterFile = "BoobBitchBlue.png";
+                    characterColumns = 7;
+                    characterRows = 4;
+                    characterScale = 0.55;
+                    break;
+                case 3:
+                    characterFile = "FilliaTest.png";
+                    characterColumns = 12;
+                    characterRows = 3;
+                    characterScale = 0.7;
                     break;
             }
         }

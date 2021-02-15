@@ -61,12 +61,12 @@ namespace GXPEngine
             }
             SetXY(_posX, 0);
 
-            if (newCharacter == 1)
+            if (newCharacter == 3)
             {
                 _animations = _animationsFillia;
                 _character = new CharacterMoveset(this, "Test Box 3.svg");
             }
-            if (newCharacter == 2)
+            if (newCharacter == 1 || newCharacter == 2)
             {
                 _animations = _animationsBoobBitch;
                 _character = new CharacterMoveset(this, "BoobBitch.svg");
