@@ -12,6 +12,7 @@ namespace GXPEngine
         Button _boobBitchButton;
         int player1Selection = 1;
         int player2Selection = 2;
+        public GameLoader round;
 
         public CharacterSelect() : base("CharacterSelect.png")
         {
@@ -34,14 +35,15 @@ namespace GXPEngine
             if (_nextButton.clicked)
             {
                 Console.WriteLine("Characters Selected.");
-                game.AddChild(new GameLoader(player1Selection, player2Selection));
+                round = new GameLoader(player1Selection, player2Selection);
+                game.AddChild(round);
                 this.LateDestroy();
             }
 
             if (_boobBitchButton.clicked)
             {
-                player1Selection = 1;
-                player2Selection = 2;
+                player1Selection = 2;
+                player2Selection = 3;
             }
         }
     }

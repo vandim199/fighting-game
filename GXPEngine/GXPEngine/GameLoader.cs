@@ -21,6 +21,7 @@ namespace GXPEngine
         int characterRows;
         double characterScale;
         int character;
+        public static int player1RoundsWon = 0, player2RoundsWon = 0;
 
         public GameLoader(int character1 = 1, int character2 = 1) : base(false)
         {
@@ -62,27 +63,34 @@ namespace GXPEngine
                 game.AddChild(new CharacterSelect());
                 LateDestroy();
             }
+
+            if (player1RoundsWon != 0)
+            {
+                this.LateDestroy();
+            }
         }
 
         void assignCharacters(int chosenCharacter)
         {
             character = chosenCharacter;
 
+            characterColumns = 7;
+            characterRows = 4;
+            characterScale = 0.55;
+
             switch (chosenCharacter)
             {
                 case 1:
                     characterFile = "BoobBitch.png";
-                    characterColumns = 7;
-                    characterRows = 4;
-                    characterScale = 0.55;
+                    characterRows = 5;
                     break;
                 case 2:
                     characterFile = "BoobBitchBlue.png";
-                    characterColumns = 7;
-                    characterRows = 4;
-                    characterScale = 0.55;
                     break;
                 case 3:
+                    characterFile = "BoobBitchPurple.png";
+                    break;
+                case 4:
                     characterFile = "FilliaTest.png";
                     characterColumns = 12;
                     characterRows = 3;

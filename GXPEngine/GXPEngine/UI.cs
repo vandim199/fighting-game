@@ -22,6 +22,8 @@ namespace GXPEngine
         public float remainingTime = 99;
         float timeStarted;
 
+        int roundsWon1 = 0, roundsWon2 = 0;
+
         public UI(Player _player1, Player _player2) : base(MyGame.main.width, MyGame.main.height, false)
         {
             healthBarFill1.graphics.FillRectangle(new SolidBrush(Color.DarkRed), new Rectangle(0, 0, healthBar1.width, healthBar1.height));
@@ -83,6 +85,18 @@ namespace GXPEngine
             Timer.TextSize(70);
             
             remainingTime = 99 - Time.time / 1000 + timeStarted;
+
+            if (remainingTime <= 0)
+            {
+                if (player1.hp > player2.hp)
+                {
+                    GameLoader.player1RoundsWon++;
+                }
+                else
+                {
+                    GameLoader.player2RoundsWon++;
+                }
+            }
         }
     }
 }
