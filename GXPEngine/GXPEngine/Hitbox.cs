@@ -9,7 +9,7 @@ namespace GXPEngine
     class Hitbox : Canvas
     {
         int _frameCreated;
-        int _transparency = 50;
+        int _transparency = 0;
         public int playerID;
         Player player;
 
@@ -51,7 +51,7 @@ namespace GXPEngine
                 if (otherHurtbox.playerID != this.playerID)
                 {
                     Console.WriteLine("HIT");
-                    otherHurtbox.damageTaken = 2;
+                    otherHurtbox.damageTaken = 1;
                     otherHurtbox.isHit = true;
                 }
             }

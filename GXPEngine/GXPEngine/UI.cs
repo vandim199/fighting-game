@@ -16,6 +16,12 @@ namespace GXPEngine
         Canvas healthBarFill2 = new Canvas(700, 90);
         Player player1, player2;
 
+        EasyDraw HPString = new EasyDraw(1920, 1080, false);
+        EasyDraw Timer = new EasyDraw(1920, 1080, false);
+
+        public float remainingTime = 99;
+        float timeStarted;
+
         public UI(Player _player1, Player _player2) : base(MyGame.main.width, MyGame.main.height, false)
         {
             healthBarFill1.graphics.FillRectangle(new SolidBrush(Color.DarkRed), new Rectangle(0, 0, healthBar1.width, healthBar1.height));
@@ -44,6 +50,12 @@ namespace GXPEngine
 
             player1 = _player1;
             player2 = _player2;
+            
+            AddChild(HPString);
+            AddChild(Timer);
+
+            timeStarted = Time.time / 1000;
+            Console.WriteLine(timeStarted);
         }
 
         void Update()
@@ -61,6 +73,16 @@ namespace GXPEngine
                 healthBar2.width = 0;
                 player2.LateDestroy();
             }
+
+            HPString.Clear(Color.Transparent);
+            HPString.Text(player1.hp.ToString(), 60, 100);
+            HPString.Text(player2.hp.ToString(), 1800, 100);
+
+            Timer.Clear(Color.Transparent);
+            Timer.Text(remainingTime.ToString(), 850, 150);
+            Timer.TextSize(70);
+            
+            remainingTime = 99 - Time.time / 1000 + timeStarted;
         }
     }
 }

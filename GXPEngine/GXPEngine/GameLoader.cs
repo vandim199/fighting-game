@@ -14,7 +14,7 @@ namespace GXPEngine
         public static Canvas wallLeft;
         public static Canvas wallRight;
         public static Canvas UI;
-        public static GameObject[] enviroment;
+        public static GameObject[] enviroment = new GameObject[3];
         // = new GameObject[3]
         string characterFile;
         int characterColumns;
@@ -41,6 +41,8 @@ namespace GXPEngine
             wallRight.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, wallRight.width, wallRight.height));
             AddChild(wallRight);
 
+            enviroment = new GameObject[] { floor, wallLeft, wallRight };
+
             assignCharacters(character1);
             player1 = new Player(character1, 1, player2, characterFile, characterColumns, characterRows, characterScale);
             AddChild(player1);
@@ -48,8 +50,6 @@ namespace GXPEngine
             assignCharacters(character2);
             player2 = new Player(character2, 2, player1, characterFile, characterColumns, characterRows, characterScale);
             AddChild(player2);
-
-            enviroment = new GameObject[] { floor, wallLeft, wallRight };
 
             UI = new UI(player1, player2);
             AddChild(UI);

@@ -9,7 +9,7 @@ namespace GXPEngine
     class Hurtbox : Canvas
     {
         int _frameCreated;
-        int _transparency = 50;
+        int _transparency = 0;
         public int playerID;
         Player player;
         public bool isHit = false;
