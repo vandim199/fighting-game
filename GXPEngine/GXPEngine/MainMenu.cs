@@ -9,9 +9,15 @@ namespace GXPEngine
     {
         Button _playButton;
         Button _exitButton;
+        Sprite logo;
 
-        public MainMenu() : base("MainMenuBG.png")
+        public MainMenu() : base("bg.png")
         {
+            logo = new Sprite("Logo.png");
+            logo.SetXY(100, 200);
+            logo.scale = 0.5f;
+            AddChild(logo);
+
             _playButton = new Button(this, 1100, 500, "PlayButton.png", 0.6);
 
             _exitButton = new Button(this, 1100, 600, "ExitButton.png", 0.6);

@@ -4,7 +4,7 @@ using GXPEngine;								// GXPEngine contains the engine
 
 public class MyGame : Game
 {
-	public MyGame() : base(1920, 1080, false, false)
+	public MyGame() : base(1280, 720, false, false)
 	{
         AddChild(new MainMenu());
         targetFps = 60;
@@ -15,9 +15,9 @@ public class MyGame : Game
 
     void Update()
 	{
-            //SetXY(width / 2 - 768, 0);
-            scale = width / 1920f;
-            //scale = height / 1080f;
+        //SetXY(width / 2 - 768, 0);
+        //scale = height / 1080f;
+        scale = width / 1920f;
     }
 
 	static void Main()							// Main() is the first method that's called when the program is run

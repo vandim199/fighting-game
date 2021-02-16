@@ -7,27 +7,39 @@ namespace GXPEngine
 {
     class CharacterSelect : Sprite
     {
-        Button _backButton;
-        Button _nextButton;
-        Button _boobBitchButton;
         int player1Selection = 1;
         int player2Selection = 2;
-        int maxCharacters = 3;
         public GameLoader round;
+        AnimationSprite characterPortrait = new AnimationSprite("CharacterIcons.png", 3, 2);
+        AnimationSprite characterPortrait2 = new AnimationSprite("CharacterIcons.png", 3, 2);
+        int[] frameSelector = new int[2];
+        private int[] controller1 = {Key.A, Key.D};
+        private int[] controller2 = {Key.LEFT, Key.RIGHT};
 
-        public CharacterSelect() : base("bg.png")
+        public CharacterSelect() : base("ui\\character-selection\\charselect-main.png")
         {
-            _backButton = new Button(this, 100, 700, "BackButton.png");
 
-            _nextButton = new Button(this, 1200, 700, "NextButton.png");
+            characterPortrait.scale = 0.5f;
+            characterPortrait.SetOrigin(characterPortrait.width / 2, characterPortrait.height / 2);
+            characterPortrait.SetXY(200, 400);
+            AddChild(characterPortrait);
 
+            characterPortrait2.scale = 0.5f;
+            characterPortrait2.SetOrigin(characterPortrait2.width / 2, characterPortrait2.height / 2);
+            characterPortrait2.SetXY(1500, 400);
+            AddChild(characterPortrait2);
         }
 
         void Update()
         {
             MenuButtons();
             PlayerInput();
-            MenuSelector();
+
+            player1Selection = PlayerSelector(1);
+            characterPortrait.SetFrame(player1Selection - 1);
+
+            player2Selection = PlayerSelector(2);
+            characterPortrait2.SetFrame(player2Selection - 1);
         }
 
         void MenuButtons(){
@@ -47,83 +59,33 @@ namespace GXPEngine
                 game.AddChild(round);
                 this.LateDestroy();
             }
-
         }
-        void PlayerInput(){
-            // if D is pressed player 1 will go to the next character
-            if (Input.GetKeyDown(Key.D)){
-                if (player1Selection <= maxCharacters){
-                player1Selection = player1Selection + 1;
-                }
-                if( player1Selection == player2Selection){
-                player1Selection += 1;}
-                if( player1Selection > maxCharacters){ player1Selection = 1;
-                    if( player1Selection == player2Selection){
-                    player1Selection += 1;}
-                } 
-                Console.WriteLine("player 1 = "+ player1Selection);
-            }
-            // if A is pressed player 2 will go 1 character back
-            if (Input.GetKeyDown(Key.A)){
-                if (player1Selection >= 1){
-                player1Selection = player1Selection - 1;
-                }
-                if( player1Selection == player2Selection){
-                player1Selection -= 1;}
-                if( player1Selection < 1){ player1Selection = 3;
-                    if( player1Selection == player2Selection){
-                player1Selection -= 1;}
-                }
-                Console.WriteLine("player 1 = "+ player1Selection);
-            }
-            // if the left arrowkey is pressed player 2 will go to the next character
-            if (Input.GetKeyDown(Key.LEFT)){
-                if (player2Selection <= maxCharacters){
-                player2Selection = player2Selection + 1;
-                }
-                if( player2Selection == player1Selection){
-                player2Selection += 1;}
-                if( player2Selection > maxCharacters){
-                    player2Selection = 1;
-                    if( player2Selection == player1Selection){
-                    player2Selection += 1;}
-                } 
-                Console.WriteLine("player 2 = "+ player2Selection);
-            }
-            // if the right arrowkey is pressed player 2 will go 1 character back
-            if (Input.GetKeyDown(Key.RIGHT)){
-                if (player2Selection >= 1){
-                player2Selection = player2Selection - 1;
-                }
-                if( player2Selection == player1Selection){
-                player2Selection -= 1;}
-                if( player2Selection < 1){
-                    player2Selection = 3;
-                    if( player2Selection == player1Selection){
-                    player2Selection -= 1;}
-                }
-                Console.WriteLine("player 2 = "+ player2Selection);
-            }
+
+        void PlayerInput()
+        {
             if (Input.GetKeyDown(Key.SPACE))
             {
                 Console.WriteLine(player1Selection + "||||||||||" + player2Selection);
             }
         }
-        void MenuSelector(){
-            if (player1Selection == 1){
-                _boobBitchButton = new Button(this, 300, 300, "BoobBitchPortrait.png", 0.7f);
-            }
-            else
-            {            
-                _boobBitchButton = new Button(this,300, 300, "circle.png", 0.7f);
-            }
-            if(player1Selection == 2)
-            {            
-                _boobBitchButton = new Button(this,300, 300, "circle.png", 0.7f);
-            }
-            if(player1Selection == 3){
-                 _boobBitchButton = new Button(this, 300, 300, "BoobBitch3.png", 0.7f);
-            }
+
+        int PlayerSelector(int player = 1)
+        {
+            int[] controller;
+
+            if (player == 1) controller = controller1;
+            else controller = controller2;
+
+            player--;
+
+            if (Input.GetKeyDown(controller[0])) frameSelector[player]++;
+
+            if (Input.GetKeyDown(controller[1])) frameSelector[player]--;
+
+            if (frameSelector[player] < 1) frameSelector[player] = 3;
+            if (frameSelector[player] > 3) frameSelector[player] = 1;
+
+            return frameSelector[player];
         }
     }
 }

@@ -32,7 +32,7 @@ namespace GXPEngine
         private bool _isAttacking = false;
 
         private int[] _controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E, Key.Q};
-        private int[] _controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT, Key.DELETE};
+        private int[] _controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT, Key.ENTER};
         private int[] _controller;
 
         //            _ = start   ^ = end      idle  walk   attack crouch hit   block  kick   laser
