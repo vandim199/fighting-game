@@ -13,6 +13,7 @@ namespace GXPEngine
         int player1Selection = 1;
         int player2Selection = 2;
         int maxCharacters = 3;
+        public GameLoader round;
 
         public CharacterSelect() : base("CharacterSelect.png")
         {
@@ -42,7 +43,8 @@ namespace GXPEngine
             if (Input.GetKeyDown(Key.E))
             {
                 Console.WriteLine("Characters Selected.");
-                game.AddChild(new GameLoader(player1Selection, player2Selection));
+                round = new GameLoader(player1Selection, player2Selection);
+                game.AddChild(round);
                 this.LateDestroy();
             }
 

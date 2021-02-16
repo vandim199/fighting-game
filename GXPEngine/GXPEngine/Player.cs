@@ -31,13 +31,13 @@ namespace GXPEngine
         private bool _holdFlip;
         private bool _isAttacking = false;
 
-        private int[] _controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E};
-        private int[] _controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT};
+        private int[] _controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E, Key.Q};
+        private int[] _controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT, Key.DELETE};
         private int[] _controller;
 
-        //            _ = start   ^ = end      idle  walk   attack crouch hit   block  kick
-        //                                     i_ i^ w_ w^  a_ a^  c_ c^ h_ h^  b_ b^  k_ k^
-        private int[] _animationsBoobBitch = { 0, 7, 13, 5, 7, 5, 12, 1, 11, 1, 18, 1, 19, 4};
+        //            _ = start   ^ = end      idle  walk   attack crouch hit   block  kick   laser
+        //                                     i_ i^ w_ w^  a_ a^  c_ c^ h_ h^  b_ b^  k_ k^  l_ l^
+        private int[] _animationsBoobBitch = { 0, 7, 13, 5, 7, 5, 12, 1, 11, 1, 18, 1, 19, 4, 23, 7};
         private int[] _animationsFillia = { 0, 2, 0, 12, 12, 8, 24, 5 };
         private int[] _animations;
 
@@ -60,16 +60,16 @@ namespace GXPEngine
                 _controller = _controller2;
             }
             SetXY(_posX, 0);
-
-            if (newCharacter == 3)
-            {
-                _animations = _animationsFillia;
-                _character = new CharacterMoveset(this, "Test Box 3.svg");
-            }
-            if (newCharacter == 1 || newCharacter == 2)
+            
+            if (newCharacter == 1 || newCharacter == 2 || newCharacter == 3)
             {
                 _animations = _animationsBoobBitch;
                 _character = new CharacterMoveset(this, "BoobBitch.svg");
+            }
+            if (newCharacter == 4)
+            {
+                _animations = _animationsFillia;
+                _character = new CharacterMoveset(this, "Test Box 3.svg");
             }
 
             _enemy = newEnemy;
@@ -149,10 +149,22 @@ namespace GXPEngine
                 SetCycle(_animations[12], _animations[13], 7);
                 _isAttacking = true;
             }
+
             if (currentFrame == _animations[12] + _animations[13] - 1)
             {
                 _isAttacking = false;
                 SetFrame(_animations[6] + _animations[7] - 1);
+            }
+
+            if (Input.GetKeyDown(_controller[5]))
+            {
+                SetCycle(_animations[14], _animations[15], 5);
+                _playingAnimation = true;
+            }
+
+            if (currentFrame == _animations[14] + _animations[15] - 1)
+            {
+                _playingAnimation = false;
             }
         }
 
@@ -232,7 +244,10 @@ namespace GXPEngine
             if (invulnerable)
             {
                 SetCycle(_animations[8], _animations[9], 5);
+                _crouching = false;
+                _isAttacking = false;
             }
+
             if (_canJump || _crouching)
             {
                 if (Input.GetKey(_controller[1]) && !flip)
