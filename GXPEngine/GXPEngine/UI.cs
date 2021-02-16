@@ -83,8 +83,9 @@ namespace GXPEngine
             Timer.Clear(Color.Transparent);
             Timer.Text(remainingTime.ToString(), 850, 150);
             Timer.TextSize(70);
-            
+
             remainingTime = 99 - Time.time / 1000 + timeStarted;
+            
 
             if (remainingTime <= 0)
             {

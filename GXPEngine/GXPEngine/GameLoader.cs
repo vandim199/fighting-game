@@ -28,7 +28,7 @@ namespace GXPEngine
             new Backdrop("Gameplay.png");
 
             floor = new Canvas(1920, 200);
-            floor.SetXY(0, 880);
+            floor.SetXY(0, 950);
             //floor.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 1920, 300));
             AddChild(floor);
 

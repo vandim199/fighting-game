@@ -14,7 +14,7 @@ namespace GXPEngine
         int player2Selection = 2;
         public GameLoader round;
 
-        public CharacterSelect() : base("CharacterSelect.png")
+        public CharacterSelect() : base("bg.png")
         {
             _backButton = new Button(this, 100, 700, "BackButton.png");
 

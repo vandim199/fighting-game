@@ -8,11 +8,17 @@ public class MyGame : Game
 	{
         AddChild(new MainMenu());
         targetFps = 60;
+        ShowMouse(true);
+        scale = 0.8f;
+        //SetXY(width / 2 - 768, 0);
     }
 
     void Update()
 	{
-	}
+            //SetXY(width / 2 - 768, 0);
+            scale = width / 1920f;
+            //scale = height / 1080f;
+    }
 
 	static void Main()							// Main() is the first method that's called when the program is run
 	{
