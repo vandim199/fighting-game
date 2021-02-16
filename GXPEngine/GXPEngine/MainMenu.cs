@@ -19,14 +19,14 @@ namespace GXPEngine
 
         void Update()
         {
-            if (_playButton.clicked)
+            if (_playButton.clicked || Input.GetKeyDown(Key.E))
             {
                 Console.WriteLine("Game Start.");
                 game.AddChild(new CharacterSelect());
                 this.LateDestroy();
             }
 
-            if (_exitButton.clicked)
+            if (_exitButton.clicked || Input.GetKeyDown(Key.Q))
             {
                 Console.WriteLine("Game Exit.");
                 Environment.Exit(0);
