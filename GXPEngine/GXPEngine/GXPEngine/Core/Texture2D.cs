@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 
 using GXPEngine.OpenGL;
+using System.IO;
 
 namespace GXPEngine.Core
 {
@@ -122,6 +123,7 @@ namespace GXPEngine.Core
 			try {
 				bitmap = new Bitmap(filename);
 			} catch {
+                Console.WriteLine("file: " + Path.GetFullPath(filename));
 				throw new Exception("Image " + filename + " cannot be found.");
 			}
 			SetBitmap(bitmap);

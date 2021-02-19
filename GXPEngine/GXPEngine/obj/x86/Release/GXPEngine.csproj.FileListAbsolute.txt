@@ -1,3 +1,4 @@
 C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\bin\Release\Bare Brawlers.exe
 C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Release\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Release\Bare Brawlers.exe
+C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Release\GXPEngine.csprojAssemblyReference.cache

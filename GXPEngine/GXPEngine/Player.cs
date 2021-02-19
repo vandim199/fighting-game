@@ -11,7 +11,7 @@ namespace GXPEngine
         private float _speedX, _speedY = 20;
         private float _timeJumped;
         private bool _canJump;
-        private bool _playingAnimation;
+        public bool _playingAnimation;
         private bool _crouching = false;
         public bool isLeft, flip = false;
         private Player _enemy;
@@ -30,14 +30,20 @@ namespace GXPEngine
         private float _blockingStun = 10000000;
         private bool _holdFlip;
         private bool _isAttacking = false;
+        private bool _walkingForward = false;
+        private bool _jumping = false;
+        private float stepsDelay = 10000000;
+        private bool stepMade = false;
+        public float remainingTime;
 
         private int[] _controller1 = {Key.W, Key.A, Key.S, Key.D, Key.E, Key.Q};
         private int[] _controller2 = {Key.UP, Key.LEFT, Key.DOWN, Key.RIGHT, Key.RIGHT_SHIFT, Key.ENTER};
         private int[] _controller;
 
-        //            _ = start   ^ = end      idle  walk   attack crouch hit   block  kick   laser
-        //                                     i_ i^ w_ w^  a_ a^  c_ c^ h_ h^  b_ b^  k_ k^  l_ l^
-        private int[] _animationsBoobBitch = { 0, 7, 13, 5, 7, 5, 12, 1, 11, 1, 18, 1, 19, 4, 23, 7};
+        //                                     0  1  2   3  4  5   6  7  8  9   10  11 12  13 14  15 16  17 18  19 20  21 22  23
+        //            _ = start   ^ = end      idle  walk   attack crouch hit   block  kick   laser highKick jump  inAir  land
+        //                                     i_ i^ w_ w^  a_ a^  c_ c^ h_ h^  b_ b^  k_ k^  l_ l^  hk_hk^ j_ j^  a_ a^  l_ l^
+        private int[] _animationsBoobBitch = { 0, 7, 12, 5, 7, 5, 36, 3, 11, 1, 17, 1, 39, 5, 19, 6, 25, 6, 30, 2, 32, 2, 34, 2};
         private int[] _animationsFillia = { 0, 2, 0, 12, 12, 8, 24, 5 };
         private int[] _animations;
 
@@ -64,17 +70,14 @@ namespace GXPEngine
             if (newCharacter == 1 || newCharacter == 2 || newCharacter == 3)
             {
                 _animations = _animationsBoobBitch;
-                _character = new CharacterMoveset(this, "BoobBitch.svg");
-            }
-            if (newCharacter == 4)
-            {
-                _animations = _animationsFillia;
-                _character = new CharacterMoveset(this, "Test Box 3.svg");
+                _character = new CharacterMoveset(this, "assets\\BoobBitch.svg");
             }
 
             _enemy = newEnemy;
 
             playerID = newPlayerNumber;
+
+            stepsDelay = Time.time;
         }
 
         void Update()
@@ -84,6 +87,16 @@ namespace GXPEngine
             animation();
             flipCharacters();
             hitInteraction();
+
+            if (_playingAnimation)
+            {
+                _jumping = false;
+            }
+
+            if (remainingTime == 98 && playerID == 1)
+            {
+                _enemy = null;
+            }
         }
 
         private void movement()
@@ -92,25 +105,57 @@ namespace GXPEngine
             else if (Input.GetKey(_controller[1])) _speedX = -_speed;
             else _speedX = 0;
 
-            if (Input.GetKey(_controller[0]) && _canJump)
+            if (_speedX != 0 && !stepMade)
+            {
+                MyGame.Walking.Play();
+                stepsDelay = Time.time;
+                stepMade = true;
+            }
+
+            if (Time.time > stepsDelay + 300)
+            {
+                stepMade = false;
+            }
+
+            if (Input.GetKey(_controller[0]) && _canJump && !_jumping)
+            {
+                _jumping = true;
+                SetCycle(_animations[18], _animations[19] + 1, 10);
+            }
+
+            if (currentFrame == _animations[18] + 1)
             {
                 _timeJumped = Time.now;
-                _speedY = -20;
+                _speedY = -30;
+                SetCycle(_animations[20], _animations[21], 5);
+            }
+
+            if (_jumping && _canJump && currentFrame > _animations[20])
+            {
+                SetCycle(_animations[22], _animations[23] + 1, 10);
+            }
+            if (currentFrame == _animations[22] + _animations[23] - 1)
+            {
+                _jumping = false;
             }
 
             if (Time.now >= _timeJumped + 200)
             {
-                _speedY = 20;
+                _speedY = 30;
             }
 
-            if (!_canJump)
+            if (_jumping)
             {
-                _speed = 14;
+                _speed = 9;
+                if (isHit)
+                {
+                    _jumping = false;
+                }
             }
 
             if (this.collider.GetCollisionInfo(GameLoader.floor.collider) != null)
             {
-                y -= 5;
+                y -= 8;
                 _canJump = true;
                 _speed = 50;
             }
@@ -131,21 +176,25 @@ namespace GXPEngine
         
             if (!_playingAnimation)
             {
-                MoveUntilCollision(_speedX, _speedY, GameLoader.enviroment);
+                MoveUntilCollision(_speedX * Time.deltaTime * 0.1f, _speedY * Time.deltaTime * 0.08f, GameLoader.enviroment);
             }
         }
 
         private void combat()
         {
-            if (Input.GetKeyDown(_controller[4]) && !_crouching)
+            //Normal Punch
+            if (Input.GetKeyDown(_controller[4]) && !_crouching && !_playingAnimation)
             {
+                MyGame.Whoosh.Play();
                 SetCycle(_animations[4], _animations[5], 5);
                 _playingAnimation = true;
             }
             if (currentFrame == _animations[4] + _animations[5] - 1) _playingAnimation = false;
             
+            //Crouch Kick
             if (_crouching && Input.GetKeyDown(_controller[4]))
             {
+                MyGame.Whoosh.Play();
                 SetCycle(_animations[12], _animations[13], 7);
                 _isAttacking = true;
             }
@@ -156,13 +205,36 @@ namespace GXPEngine
                 SetFrame(_animations[6] + _animations[7] - 1);
             }
 
-            if (Input.GetKeyDown(_controller[5]))
+            //Laser Beam
+            if (Input.GetKeyDown(_controller[5]) && !_walkingForward && !_playingAnimation)
             {
-                SetCycle(_animations[14], _animations[15], 5);
+                MyGame.Laser.Play(false, 0, 0.3f);
+                SetCycle(_animations[14], _animations[15], 7);
                 _playingAnimation = true;
             }
-
             if (currentFrame == _animations[14] + _animations[15] - 1)
+            {
+                _playingAnimation = false;
+            }
+
+            //High Kick
+            if (_speedX > 0 && !flip)
+            {
+                _walkingForward = true;
+            }
+            else if (_speedX < 0 && flip)
+            {
+                _walkingForward = true;
+            }
+            else _walkingForward = false;
+
+            if (_walkingForward && Input.GetKeyDown(_controller[5]))
+            {
+                MyGame.Whoosh.Play();
+                SetCycle(_animations[16], _animations[17], 8);
+                _playingAnimation = true;
+            }
+            if (currentFrame == _animations[16] + _animations[17] - 1)
             {
                 _playingAnimation = false;
             }
@@ -172,7 +244,7 @@ namespace GXPEngine
         {
             Animate();
 
-            if (!_playingAnimation)
+            if (!_playingAnimation && _canJump && !_jumping)
             {
                 if (_speedX != 0) SetCycle(_animations[2], _animations[3], 7);
                 else if (!invulnerable) SetCycle(_animations[0], _animations[1], 7);
@@ -190,7 +262,6 @@ namespace GXPEngine
             if (currentFrame == _animations[6] + _animations[7] - 1) SetCycle(_animations[6] + _animations[7] - 1, 1, 5);
             if (!Input.GetKey(_controller[2]) && _crouching && !_isAttacking)
             {
-                SetCycle(0, 1, 5);
                 _crouching = false;
                 _playingAnimation = false;
             }
@@ -228,6 +299,7 @@ namespace GXPEngine
         {
             if (startInvulnerable)
             {
+                MyGame.Punch.Play(false, 0, 0.5f);
                 _timeInvulnerable = Time.time;
                 invulnerable = true;
                 isHit = true;
@@ -260,7 +332,6 @@ namespace GXPEngine
                 }
                 else _isBlocking = false;
             }
-            else _isBlocking = false;
 
             if (damageTaken != 0)
             {
@@ -268,6 +339,7 @@ namespace GXPEngine
                 if (_isBlocking && !invulnerable)
                 {
                     _blockingStun = Time.time;
+                    MyGame.Block.Play(false, 0, 0.2f);
                     isHit = true;
                 }
                 else

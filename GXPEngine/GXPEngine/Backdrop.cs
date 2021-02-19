@@ -5,12 +5,16 @@ using System.Text;
 
 namespace GXPEngine
 {
-    class Backdrop : Sprite
+    class Backdrop : AnimationSprite
     {
-        public Backdrop(string backgroundImage) : base(backgroundImage, false, false)
+        public Backdrop(string backgroundImage) : base(backgroundImage, 5, 8, -1 , false, false)
         {
-            //scale = 0.9f;
-            game.AddChild(this);
+            SetCycle(0, 21, 5);
+        }
+
+        void Update()
+        {
+            Animate();
         }
     }
 }

@@ -12,9 +12,11 @@ namespace GXPEngine
         int _transparency = 0;
         public int playerID;
         Player player;
+        int damage;
 
-        public Hitbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer, bool mirrored = false) : base(sizeX, sizeY)
+        public Hitbox(int posX, int posY, int sizeX, int sizeY, int playerFrame, int newPlayerID, Player newPlayer, bool mirrored = false, int newDamage = 1) : base(sizeX, sizeY)
         {
+            damage = newDamage;
             player = newPlayer as Player;
             playerID = newPlayerID;
 
@@ -51,7 +53,7 @@ namespace GXPEngine
                 if (otherHurtbox.playerID != this.playerID)
                 {
                     Console.WriteLine("HIT");
-                    otherHurtbox.damageTaken = 1;
+                    otherHurtbox.damageTaken = damage;
                     otherHurtbox.isHit = true;
                 }
             }

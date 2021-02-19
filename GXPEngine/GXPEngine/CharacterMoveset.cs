@@ -21,10 +21,9 @@ namespace GXPEngine
             //readSVG("Test Box 4.svg");
         }
 
-        private void collisionMaker(string collisionX, string collisionY, string collisionW, string collisionH, string color, string collisionFrame, string collisionDuration = "1")
+        private void collisionMaker(string collisionX, string collisionY, string collisionW, string collisionH, string color, string collisionFrame, string collisionDuration = "1", string damage = "1")
         {
-            //hurtboxes =
-            new HurtboxCreator(IntConverter(collisionX), IntConverter(collisionY), IntConverter(collisionW), IntConverter(collisionH), color, IntConverter(collisionFrame), IntConverter(collisionDuration), player);
+            new HurtboxCreator(IntConverter(collisionX), IntConverter(collisionY), IntConverter(collisionW), IntConverter(collisionH), color, IntConverter(collisionFrame), IntConverter(collisionDuration), player, IntConverter(damage));
         }
 
         public static int IntConverter(string value)
@@ -39,7 +38,6 @@ namespace GXPEngine
                 }
                 else
                 {
-                    Console.WriteLine("value is " + value);
                     roundedInt = int.Parse(value);
                 }
             }
@@ -58,14 +56,15 @@ namespace GXPEngine
                 {
                     if (line.Contains("stroke"))
                     {
-                        Console.WriteLine(line);
+                        //Console.WriteLine(line);
                         collisionMaker(line.Between("x=\"", "\""),
                         line.Between("y=\"", "\""),
                         line.Between("width=\"", "\""),
                         line.Between("height=\"", "\""),
                         line.Between("fill=\"#", "\""),
                         line.Between("stroke=\"#", "\""),
-                        line.Between("stroke-width=\"", "\""));
+                        line.Between("stroke-width=\"", "\""),
+                        line.Between("damage=\"", "\""));
                     }
                 }
                 counter++;

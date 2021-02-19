@@ -11,8 +11,10 @@ namespace GXPEngine
         int X, Y, W, H, Frame, Duration;
         bool isHurtbox = false;
         bool isHitbox = false;
+        bool canShoot = true;
+        int damage;
 
-        public HurtboxCreator(int newX, int newY, int newW, int newH, string newColor, int newFrame, int newDuration, Player newPlayer) : base()
+        public HurtboxCreator(int newX, int newY, int newW, int newH, string newColor, int newFrame, int newDuration, Player newPlayer, int newDamage = 1) : base()
         {
             X = newX;
             Y = newY;
@@ -21,18 +23,17 @@ namespace GXPEngine
             Frame = newFrame;
             Duration = newDuration;
             player = newPlayer;
+            damage = newDamage;
 
             player.AddChild(this);
 
             if(newColor == "00ff00")
             {
                 isHurtbox = true;
-                Console.WriteLine("it's a hurtbox");
             }
             if (newColor == "ff0000")
             {
                 isHitbox = true;
-                Console.WriteLine("it's a hitbox");
             }
         }
 
@@ -55,10 +56,17 @@ namespace GXPEngine
                 {
                     if (isHitbox)
                     {
-                        new Hitbox(X, Y, W, H, player.currentFrame, player.playerID, player, player.flip);
+                        new Hitbox(X, Y, W, H, player.currentFrame, player.playerID, player, player.flip, damage);
                     }
                 }
             }
+
+            if (player.currentFrame == 21 && canShoot)
+            {
+                new RangedAttack(player);
+                canShoot = false;
+            }
+            else if (player.currentFrame != 21) canShoot = true;
         }
     }
 }

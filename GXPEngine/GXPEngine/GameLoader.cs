@@ -21,14 +21,36 @@ namespace GXPEngine
         int characterRows;
         double characterScale;
         int character;
-        public static int player1RoundsWon = 0, player2RoundsWon = 0;
+        public static int player1RoundsWon = 0, player2RoundsWon = 0, totalRounds = 0, previousTotalRounds = 0;
+        int character1, character2;
+        public static int lastRoundWinner = 0;
 
-        public GameLoader(int character1 = 1, int character2 = 1) : base(false)
+        public GameLoader(int newCharacter1 = 1, int newCharacter2 = 2, int p1Rounds = 0, int p2Rounds = 0, int newLastRoundWinner = 0) : base(false)
         {
-            new Backdrop("Gameplay.png");
+            AddChild(new Backdrop("assets\\Background.png"));
+            AddChild(new PopUp("ui\\gamefield\\FIGHT.png", -50));
+
+            switch (p1Rounds + p2Rounds)
+            {
+                case 0:
+                    MyGame.Round1.Play();
+                    break;
+                case 1:
+                    MyGame.Round2.Play();
+                    break;
+                case 2:
+                    MyGame.Round3.Play();
+                    break;
+            }
+
+            character1 = newCharacter1;
+            character2 = newCharacter2;
+            player1RoundsWon = p1Rounds;
+            player2RoundsWon = p2Rounds;
+            Console.WriteLine("P1: " + player1RoundsWon + " P2: " + player2RoundsWon);
 
             floor = new Canvas(1920, 200);
-            floor.SetXY(0, 950);
+            floor.SetXY(0, 1050);
             //floor.graphics.FillRectangle(new SolidBrush(Color.Black), new Rectangle(0, 0, 1920, 300));
             AddChild(floor);
 
@@ -60,13 +82,32 @@ namespace GXPEngine
         {
             if (Input.GetKeyDown(Key.P))
             {
-                game.AddChild(new CharacterSelect());
+                game.AddChild(new MainMenu());
                 LateDestroy();
             }
 
-            if (player1RoundsWon != 0)
+            if (player1RoundsWon == 2 || player2RoundsWon == 2)
             {
-                this.LateDestroy();
+                game.AddChild(new MainMenu());
+                LateDestroy();
+            }
+
+            totalRounds = player1RoundsWon + player2RoundsWon;
+
+            if(totalRounds > previousTotalRounds)
+            {
+                LateDestroy();
+                game.AddChild(new GameLoader(character1, character2, player1RoundsWon, player2RoundsWon, lastRoundWinner));
+                previousTotalRounds++;
+            }
+
+            if (player1.startInvulnerable || player2.startInvulnerable)
+            {
+                game.SetXY(Utils.Random(-10, 10), Utils.Random(-10, 10));
+            }
+            if (!player1.startInvulnerable && !player2.startInvulnerable)
+            {
+                game.SetXY(0, 0);
             }
         }
 
@@ -75,26 +116,19 @@ namespace GXPEngine
             character = chosenCharacter;
 
             characterColumns = 7;
-            characterRows = 4;
+            characterRows = 7;
             characterScale = 0.55;
 
             switch (chosenCharacter)
             {
                 case 1:
-                    characterFile = "BoobBitch.png";
-                    characterRows = 5;
+                    characterFile = "assets\\BoobBitch.png";
                     break;
                 case 2:
-                    characterFile = "BoobBitchBlue.png";
+                    characterFile = "assets\\BoobBitchBlue.png";
                     break;
                 case 3:
-                    characterFile = "BoobBitchPurple.png";
-                    break;
-                case 4:
-                    characterFile = "FilliaTest.png";
-                    characterColumns = 12;
-                    characterRows = 3;
-                    characterScale = 0.7;
+                    characterFile = "assets\\BoobBitchPurple.png";
                     break;
             }
         }
