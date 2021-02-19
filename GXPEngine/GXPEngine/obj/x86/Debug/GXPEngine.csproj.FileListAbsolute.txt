@@ -1,12 +1,12 @@
-C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csprojAssemblyReference.cache
-C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
 C:\Users\Gebruiker\Documents\project lift off\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
-C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\bin\Debug\Bare Brawlers.exe
 C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\bin\Debug\Bare Brawlers.pdb
-C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\Bare Brawlers.exe
-C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\Bare Brawlers.pdb
 C:\Users\Gebruiker\Documents\project lift off\GXPEngine\GXPEngine\bin\Debug\Bare Brawlers.exe
 C:\Users\Gebruiker\Documents\project lift off\GXPEngine\GXPEngine\bin\Debug\Bare Brawlers.pdb
 C:\Users\Gebruiker\Documents\project lift off\GXPEngine\GXPEngine\obj\x86\Debug\Bare Brawlers.exe
 C:\Users\Gebruiker\Documents\project lift off\GXPEngine\GXPEngine\obj\x86\Debug\Bare Brawlers.pdb
 C:\Users\Gebruiker\Documents\project lift off\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csprojAssemblyReference.cache
+C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\bin\Debug\Bare Brawlers.exe
+C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csproj.CoreCompileInputs.cache
+C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\Bare Brawlers.exe
+C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\Bare Brawlers.pdb
+C:\Users\vandi\Documents\GitHub\fighting-game\GXPEngine\GXPEngine\obj\x86\Debug\GXPEngine.csprojAssemblyReference.cache

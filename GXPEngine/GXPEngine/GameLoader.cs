@@ -122,13 +122,13 @@ namespace GXPEngine
             switch (chosenCharacter)
             {
                 case 1:
-                    characterFile = "assets\\BoobBitch.png";
+                    characterFile = "assets/BoobBitch.png";
                     break;
                 case 2:
-                    characterFile = "assets\\BoobBitchBlue.png";
+                    characterFile = "assets/BoobBitchBlue.png";
                     break;
                 case 3:
-                    characterFile = "assets\\BoobBitchPurple.png";
+                    characterFile = "assets/BoobBitchPurple.png";
                     break;
             }
         }
